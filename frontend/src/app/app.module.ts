@@ -46,7 +46,7 @@ import { ProductReviewEditComponent } from './product-review-edit/product-review
 import { TwoFactorAuthEnterComponent } from './two-factor-auth-enter/two-factor-auth-enter.component'
 import { PrivacySecurityComponent } from './privacy-security/privacy-security.component'
 import { ErrorPageComponent } from './error-page/error-page.component'
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts'
 
 import { NgMatSearchBarModule } from 'ng-mat-search-bar'
 import { RequestInterceptor } from './Services/request.interceptor'

@@ -61,43 +61,37 @@ export class ScoreBoard2Component implements OnInit {
   public questionnaireUrl: string = 'https://forms.gle/2Tr5m1pqnnesApxN8'
   public appName: string = 'OWASP Juice Shop'
   public localBackupEnabled: boolean = true
-  public chartData = [];
+  public hackOfTheDay: string
+  public chartData = []
   public chartLabels = [
-    "Solved",
-    "Unsolved"
-  ];
+    'Solved',
+    'Unsolved'
+  ]
+
   public chartOptions = {
     responsive: true
-  };
-  public chartColors: Array<any> = [
-    { // first color
-      backgroundColor: 'green'
-    },
-    { // second color
-      backgroundColor: 'blue'
-    }];
-  
+  }
 
   constructor (private readonly configurationService: ConfigurationService, private readonly challengeService: ChallengeService, private readonly codeSnippetService: CodeSnippetService, private readonly sanitizer: DomSanitizer, private readonly ngZone: NgZone, private readonly io: SocketIoService, private readonly spinner: NgxSpinnerService, private readonly translate: TranslateService, private readonly localBackupService: LocalBackupService, private readonly dialog: MatDialog) {
   }
 
-  spinnerDiameter: number = 1;
-  @ViewChild('spinnerDiv') spinnerDiv: ElementRef;
+  spinnerDiameter: number = 1
+  @ViewChild('spinnerDiv') spinnerDiv: ElementRef
 
-  ngAfterViewInit() {
+  ngAfterViewInit () {
     // Wrap in a timeout to avoid ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(this.adjustSpinnerSize.bind(this), 100);
+    setTimeout(this.adjustSpinnerSize.bind(this), 100)
   }
 
   // Something happens that would cause the div height to change
-  someEvent() {
-      this.adjustSpinnerSize();
+  someEvent () {
+    this.adjustSpinnerSize()
   }
 
-  adjustSpinnerSize() {
-      this.spinnerDiameter = this.spinnerDiv.nativeElement.offsetWidth;
+  adjustSpinnerSize () {
+    this.spinnerDiameter = this.spinnerDiv.nativeElement.offsetWidth
   }
-  
+
   ngOnInit () {
     this.spinner.show()
 
@@ -142,6 +136,7 @@ export class ScoreBoard2Component implements OnInit {
           this.populateFilteredChallengeLists()
           this.calculateGradientOffsets(challenges)
           this.calculateTutorialTier(challenges)
+          this.determineDailyHack();
 
           this.toggledMajorityOfDifficulties = this.determineToggledMajorityOfDifficulties()
           this.toggledMajorityOfCategories = this.determineToggledMajorityOfCategories()
@@ -178,21 +173,21 @@ export class ScoreBoard2Component implements OnInit {
     })
   }
 
-
-  ///
-  determineDailyHack (challenge: Challenge) {
-
+  determineDailyHack () {
   //   function determineHackOfTheDay(challenge: Challenge)
-	// loop for all items i in Challenges{
-	// 	wait for a period of time
-	// 	this.HOTD=Challenges[i]
-	// }
-
-    this.showDisabledChallenges = localStorage.getItem('showDisabledChallenges') ? JSON.parse(String(localStorage.getItem('showDisabledChallenges'))) : false
+    // loop for all items i in Challenges{
+    // 	wait for a period of time
+    // 	this.HOTD=Challenges[i]
+    // }
+    //this.showDisabledChallenges = localStorage.getItem('showDisabledChallenges') ? JSON.parse(String(localStorage.getItem('showDisabledChallenges'))) : false
+    for (let i = 1; i < this.challenges.length; i++) {
+      console.log(this.hackOfTheDay);
+      console.log(this.challenges[i].name);
+      this.hackOfTheDay = this.challenges[Math.round(Math.random()*i)].name;
+      // if (JSON.parse(this.hackOfTheDay).solved==false){
+      //   break;
+      }
   }
-  ///
-
-
   augmentHintText (challenge: Challenge) {
     if (challenge.disabledEnv) {
       this.numDisabledChallenges++
@@ -232,7 +227,7 @@ export class ScoreBoard2Component implements OnInit {
     this.chartData[0] =
     {
       data: [this.percentChallengesSolved, 100 - Number(this.percentChallengesSolved)]
-    };
+    }
   }
 
   calculateTutorialTier (challenges: Challenge[]) {
@@ -410,6 +405,4 @@ export class ScoreBoard2Component implements OnInit {
       }
     })
   }
-  
-
 }

@@ -87,7 +87,11 @@ export class ScoreBoardComponent implements OnInit {
       this.challengeService.find({ sort: 'name' }).subscribe((challenges) => {
         this.codeSnippetService.challenges().subscribe((challengesWithCodeSnippet) => {
           this.challenges = challenges
-          for (let i = 0; i < this.challenges.length; i++) {
+          for (
+            let i = 0;
+            i < this.challenges.length;
+            i++
+          ) {
             this.augmentHintText(this.challenges[i])
             this.trustDescriptionHtml(this.challenges[i])
             if (this.challenges[i].name === 'Score Board') {
